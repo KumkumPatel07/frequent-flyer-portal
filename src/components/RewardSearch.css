@@ -1,0 +1,296 @@
+/* Monochromatic Corporate Styling for Reward Flight Search & Redemption */
+.reward-search-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  text-align: left;
+}
+
+.reward-search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+
+.reward-search-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+  line-height: 120%;
+}
+
+.reward-balance-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  font-family: var(--mono);
+}
+
+/* Search Form */
+.reward-search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  letter-spacing: 0.5px;
+}
+
+.form-input {
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+  color: var(--text-h);
+  box-sizing: border-box;
+  transition: border-color 0.2s, outline 0.2s;
+}
+
+.form-input:focus-visible {
+  outline: 2px solid var(--text-h);
+  outline-offset: 1px;
+}
+
+.form-input.input-invalid {
+  border-color: currentColor;
+  outline: 1px solid currentColor;
+}
+
+.form-error-banner {
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 8px;
+}
+
+.reward-btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--text-h);
+  color: var(--bg);
+  cursor: pointer;
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+.reward-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.reward-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--code-bg);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.reward-btn:focus-visible {
+  outline: 2px solid var(--text-h);
+  outline-offset: 2px;
+}
+
+/* Results Section */
+.reward-results-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reward-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reward-flight-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.flight-info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flight-number-badge {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-h);
+}
+
+.flight-route-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.flight-date-text {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.redemption-action-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.required-miles-display {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.insufficient-miles-alert {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.insufficient-badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text-h);
+}
+
+.shortfall-text {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Loading & Empty State */
+.reward-search-loading,
+.reward-search-empty {
+  padding: 32px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  text-align: center;
+  color: var(--text);
+  background: var(--code-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--text-h);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-text,
+.empty-message {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .reward-search-container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .reward-flight-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .redemption-action-group {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .reward-btn {
+    width: 100%;
+  }
+}

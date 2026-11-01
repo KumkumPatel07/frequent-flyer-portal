@@ -273,6 +273,80 @@ Implementation instructions:
 Stop after the RED phase and report all results.
 ```
 
+## Phase 4: Reward Flight Search & Miles Redemption Calculator (TDD GREEN Phase - Implementation)
+
+```text
+Continue ticket ENG-163087, Phase 4: Reward Flight Search & Miles Redemption Calculator.
+
+The RED phase is complete and committed.
+
+Now implement RewardSearch to make all 11 Phase 4 tests pass.
+
+First inspect:
+
+* src/components/RewardSearch.tsx
+* src/components/RewardSearch.test.tsx
+* Existing MemberProfile and FlightActivity components and CSS
+* PROMPTS.md
+
+REQUIREMENTS:
+
+1. Implement an accessible reward flight search form with:
+
+   * Origin
+   * Destination
+   * Travel date
+
+2. Validate all required fields and prevent invalid submissions. Highlight invalid fields in red and provide accessible error messages.
+
+3. Display matching reward flights with:
+
+   * Flight number
+   * Origin and destination
+   * Travel date
+   * Required miles
+
+4. Show "No data found" when no flights match.
+
+5. Calculate whether the member has sufficient miles for redemption.
+
+6. Show a clear insufficient-miles message and prevent redemption when miles are insufficient.
+
+7. Allow eligible members to confirm redemption.
+
+8. Show an accessible loading indicator during asynchronous search and redemption operations.
+
+9. Handle malformed flight data safely.
+
+10. Sanitize text inputs before storing them in state. Avoid dangerouslySetInnerHTML.
+
+11. Ensure keyboard accessibility and accessible labels.
+
+DESIGN:
+
+* Follow the existing monochromatic corporate design system.
+* Reuse existing CSS variables and spacing conventions.
+* Use consistent 16px/32px spacing.
+* Ensure responsive layout.
+* Avoid rogue hardcoded hex colors.
+
+TDD RULES:
+
+* Do not modify, weaken, or delete any existing tests.
+* Do not install unnecessary dependencies.
+* Do not modify unrelated features.
+* Update PROMPTS.md with the exact implementation prompt.
+* Run npm run test:run. All 33 tests must pass.
+* Run npm run build.
+* Run npm run lint.
+* Fix all errors without weakening tests.
+
+Stop after implementation and verification.
+
+Report all changed files, test results, build results, lint results, and remaining limitations.
+```
+
+
 
 
 
