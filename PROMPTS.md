@@ -40,3 +40,59 @@ At the end, report:
 
 Stop after the RED phase. Do not implement anything.
 ```
+
+## Phase 2: Member Profile & Tier Status (TDD GREEN Phase - Implementation)
+
+```text
+Continue ticket ENG-163087, Phase 2: Member Profile & Tier Status.
+
+The RED phase is complete and committed. Now implement the MemberProfile component to make all 10 failing acceptance tests pass.
+
+Important instructions:
+
+1. First inspect:
+
+   * src/components/MemberProfile.tsx
+   * src/components/MemberProfile.test.tsx
+   * PROMPTS.md
+   * Existing project styling and architecture.
+
+2. Implement the actual MemberProfile UI and business logic. Replace the null stub.
+
+3. Requirements:
+
+   * Display member name, member ID, current tier, and active miles.
+   * Support Silver, Gold, Platinum, and Diamond tiers.
+   * Show an accessible progress bar toward the next tier.
+   * Show next tier name and remaining miles.
+   * Diamond must display a completed/highest-tier state without an invalid next-tier target.
+   * Missing or null member data must display "No data found".
+   * All interactive elements must have accessible labels and keyboard support.
+   * Use clean monochromatic corporate styling.
+   * Follow consistent 16px and 32px spacing.
+   * Do not introduce rogue hardcoded hex colors.
+   * Ensure responsive layout.
+
+4. Security:
+
+   * Sanitize text inputs before storing them in state.
+   * Avoid dangerouslySetInnerHTML.
+   * Do not introduce XSS vulnerabilities.
+
+5. Testing:
+
+   * Run npm run test:run.
+   * All 12 tests (10 feature + 2 baseline) must pass.
+   * Run npm run build.
+   * Run npm run lint.
+   * Fix any errors without weakening or deleting tests.
+
+6. Update PROMPTS.md with the exact implementation prompt used.
+
+7. Do not modify unrelated application features.
+
+8. Do not install additional dependencies unless absolutely necessary.
+
+Stop after implementation and verification. Report changed files, test results, build results, lint results, and any remaining limitations.
+```
+
