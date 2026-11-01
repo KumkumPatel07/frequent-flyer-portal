@@ -155,4 +155,73 @@ Report:
 5. Any configuration errors.
 ```
 
+## Phase 3: Flight Activity & Miles Ledger (TDD GREEN Phase - Implementation)
+
+```text
+Continue ticket ENG-163087, Phase 3: Flight Activity & Miles Ledger.
+
+The RED phase is complete and committed. Now implement FlightActivity to make all 10 new acceptance tests pass.
+
+Before implementation, inspect:
+
+* src/components/FlightActivity.tsx
+* src/components/FlightActivity.test.tsx
+* src/components/MemberProfile.tsx
+* src/components/MemberProfile.css
+* PROMPTS.md
+
+REQUIREMENTS:
+
+1. Render an accessible, structured flight activity table containing:
+
+   * Flight number
+   * Departure and arrival locations
+   * Flight date
+   * Transaction type (Earned or Redeemed)
+   * Miles
+
+2. Clearly distinguish earned and redeemed miles using appropriate positive/negative indicators and accessible text.
+
+3. Support multiple flight transactions.
+
+4. Implement accessible search/filter functionality for flight number and route.
+
+5. Show "No data found" when:
+
+   * Transactions are empty.
+   * Search produces no matching results.
+
+6. Show a visible, accessible loading indicator when isLoading is true.
+
+7. Handle missing or malformed transaction records safely without crashing.
+
+8. Sanitize search input and text values before storing them in state. Avoid dangerouslySetInnerHTML.
+
+9. Ensure keyboard accessibility and appropriate ARIA labels.
+
+DESIGN:
+
+* Follow the existing monochromatic corporate design.
+* Reuse existing CSS variables and design conventions where practical.
+* Maintain consistent 16px and 32px spacing.
+* Responsive layout for mobile and desktop.
+* Avoid rogue hardcoded hex colors.
+
+TDD RULES:
+
+* Do not modify, weaken, or delete existing tests.
+* Do not install unnecessary dependencies.
+* Do not modify unrelated components.
+* Update PROMPTS.md with the exact implementation prompt.
+* Run npm run test:run. All 22 tests must pass.
+* Run npm run build.
+* Run npm run lint.
+* Fix all errors without weakening tests.
+
+Stop after implementation and verification.
+
+Report changed files, test results, build results, lint results, and remaining limitations.
+```
+
+
 
