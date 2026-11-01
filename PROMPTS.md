@@ -223,5 +223,56 @@ Stop after implementation and verification.
 Report changed files, test results, build results, lint results, and remaining limitations.
 ```
 
+## Phase 4: Reward Flight Search & Miles Redemption Calculator (TDD RED Phase)
+
+```text
+Continue the End-to-End Frequent Flyer Portal project.
+
+Ticket: ENG-163087
+Phase 4: Reward Flight Search & Miles Redemption Calculator.
+
+Phase 3 is complete and committed. Follow strict Test-Driven Development.
+
+IMPORTANT: Write tests ONLY. Do not implement the UI or business logic yet.
+
+Acceptance criteria:
+
+1. Render an accessible reward flight search form.
+2. Provide accessible origin, destination, and travel date inputs.
+3. Validate missing and invalid search fields and prevent invalid submission.
+4. Display matching reward flights with:
+
+   * Flight number
+   * Origin and destination
+   * Travel date
+   * Required miles
+5. Display "No data found" when no reward flights match.
+6. Calculate whether the member has sufficient miles for redemption.
+7. Display a clear error when available miles are insufficient.
+8. Prevent redemption when the member does not have enough miles.
+9. Provide a redemption confirmation action for eligible flights.
+10. Display an accessible loading state during asynchronous search/redemption operations.
+11. Handle malformed data safely.
+12. Sanitize text inputs before storing them in state. Avoid dangerouslySetInnerHTML.
+13. Ensure keyboard accessibility and accessible labels.
+
+Implementation instructions:
+
+* Inspect existing project architecture and testing conventions.
+* Reuse existing TypeScript and Vitest setup.
+* Create src/components/RewardSearch.test.tsx.
+* Create only minimum type contracts or a temporary null stub if required for compilation.
+* Do not implement actual UI, styling, search logic, or redemption logic.
+* Do not modify existing tests.
+* Do not install additional dependencies.
+* Update PROMPTS.md with the exact prompt used.
+* Run npm run test:run and verify that new feature tests fail for expected implementation-related reasons.
+* Existing tests must remain passing.
+* Run build and lint to check for unrelated errors.
+
+Stop after the RED phase and report all results.
+```
+
+
 
 
