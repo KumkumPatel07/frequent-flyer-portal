@@ -346,6 +346,85 @@ Stop after implementation and verification.
 Report all changed files, test results, build results, lint results, and remaining limitations.
 ```
 
+## Phase 5: Portal Composition & End-to-End Integration (TDD RED Phase)
+
+```text
+Continue ticket ENG-163087: End-to-End Frequent Flyer Portal.
+
+Start Phase 5: Portal Composition & End-to-End Integration — TDD RED phase.
+
+IMPORTANT: Tests first. Do not implement the actual integration yet.
+
+First inspect the existing project:
+
+* src/App.tsx
+* src/App.test.tsx
+* src/components/MemberProfile.tsx
+* src/components/FlightActivity.tsx
+* src/components/RewardSearch.tsx
+* Their existing test files
+* Existing CSS and design tokens
+* PROMPTS.md
+
+Understand existing component props and data contracts before writing integration tests.
+
+OBJECTIVE:
+
+Create integration acceptance tests for the complete Frequent Flyer Portal.
+
+TEST REQUIREMENTS:
+
+1. Main dashboard renders the Member Profile, Flight Activity, and Reward Search sections together.
+
+2. Member information and available miles are shared consistently across the portal.
+
+3. Reward flight search works inside the integrated dashboard.
+
+4. A successful redemption:
+
+   * Updates the member's available miles.
+   * Updates the flight/miles ledger appropriately.
+   * Prevents redemption when the balance is insufficient.
+   * Keeps profile and ledger data consistent.
+
+5. Primary action completion logs exactly:
+   [Analytics] User interacted with End-to-End Frequent Flyer Portal
+
+6. Empty data states display "No data found".
+
+7. Loading states are accessible and visible during asynchronous operations.
+
+8. Invalid data and malformed records do not crash the portal.
+
+9. All interactive elements remain keyboard accessible and properly labelled.
+
+10. Verify the portal can initialize without errors when persisted data is missing or malformed.
+
+TDD RULES:
+
+* Create integration tests before implementation.
+* Use the existing Vitest and React Testing Library setup.
+* Do not modify or weaken existing component tests.
+* Do not change existing component implementations in this RED phase.
+* Use temporary typed stubs only if necessary.
+* Do not introduce unnecessary dependencies.
+* Append the exact prompt to PROMPTS.md.
+
+VERIFICATION:
+
+Run:
+
+* npm run test:run
+* npm run build
+* npm run lint
+
+Expected:
+
+* New integration tests should fail for missing integration functionality.
+* All existing 33 tests must continue passing!
+```
+
+
 
 
 
