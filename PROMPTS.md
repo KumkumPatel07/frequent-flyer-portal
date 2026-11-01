@@ -96,3 +96,63 @@ Important instructions:
 Stop after implementation and verification. Report changed files, test results, build results, lint results, and any remaining limitations.
 ```
 
+## Phase 3: Flight Activity & Miles Ledger (TDD RED Phase)
+
+```text
+ Continue the End-to-End Frequent Flyer Portal project, ticket ENG-163087.
+
+Phase 2 is complete and committed. Start Phase 3: Flight Activity & Miles Ledger.
+
+STRICT TDD RULE: Create tests first. Do not implement the actual UI or business logic yet.
+
+Requirements:
+
+1. Display a flight activity ledger containing:
+
+   * Flight number
+   * Departure and arrival locations
+   * Flight date
+   * Miles earned or redeemed
+   * Transaction type (Earned or Redeemed)
+
+2. Correctly distinguish earned miles from redeemed miles.
+
+3. Display multiple flight transactions in a structured, accessible table.
+
+4. Provide an accessible search/filter control to filter transactions by flight number or route.
+
+5. Display "No data found" when the list is empty or a search returns no matching transactions.
+
+6. Display a visible loading indicator when the component is in a loading state.
+
+7. Handle missing or malformed transaction data safely without crashing.
+
+8. Ensure interactive elements have accessible labels and support keyboard navigation.
+
+9. Sanitize text values before storing them in state. Avoid dangerouslySetInnerHTML.
+
+Implementation instructions:
+
+* Inspect the existing test setup and Phase 2 component conventions.
+* Create src/components/FlightActivity.test.tsx.
+* Create only the minimum TypeScript type contracts or temporary null stub needed for tests to compile.
+* Do not implement the actual UI, styling, filtering logic, or business logic.
+* Do not weaken or delete existing tests.
+* Do not install additional dependencies.
+* Update root PROMPTS.md with the exact prompt used.
+* Run npm run test:run.
+* Confirm the new feature tests fail because the feature is not implemented.
+* Confirm existing tests remain passing.
+
+Stop after the RED phase.
+
+Report:
+
+1. Files created or modified.
+2. Number of passing and failing tests.
+3. Whether failures are expected feature-related failures.
+4. Build and lint results.
+5. Any configuration errors.
+```
+
+
