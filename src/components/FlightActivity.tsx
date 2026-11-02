@@ -84,7 +84,6 @@ export function FlightActivity({
   }, [validTransactions, searchTerm])
 
   // Track unique display values to prevent DOM query collisions while preserving accessibility
-  const seenAirports = new Set<string>()
   const seenTypes = new Set<string>()
 
   // Loading State
@@ -153,16 +152,9 @@ export function FlightActivity({
                 const isEarned = tx.type === 'Earned'
                 const formattedMiles = `${isEarned ? '+' : '-'}${tx.miles.toLocaleString()}`
 
-                // Render first instance with direct airport code; subsequent duplicates with city name
+                // Render airport codes consistently
                 const depCode = tx.departure
-                const isDepDuplicate = seenAirports.has(depCode)
-                seenAirports.add(depCode)
-                const displayDep = isDepDuplicate && depCode === 'LHR' ? 'London Heathrow' : depCode
-
                 const arrCode = tx.arrival
-                const isArrDuplicate = seenAirports.has(arrCode)
-                seenAirports.add(arrCode)
-                const displayArr = isArrDuplicate && arrCode === 'LHR' ? 'London Heathrow' : arrCode
 
                 // Render first type instance with direct text; subsequent with descriptive label
                 const isTypeDuplicate = seenTypes.has(tx.type)
@@ -173,12 +165,12 @@ export function FlightActivity({
                   <tr key={tx.id} className="flight-row">
                     <td className="flight-number">{tx.flightNumber}</td>
                     <td className="flight-route">
-                      <span className="airport-code">{displayDep}</span>
+                      <span className="airport-code">{depCode}</span>
                       <span className="route-arrow" aria-hidden="true">
                         {' '}
                         →{' '}
                       </span>
-                      <span className="airport-code">{displayArr}</span>
+                      <span className="airport-code">{arrCode}</span>
                     </td>
                     <td className="flight-date">{tx.date}</td>
                     <td className="flight-type">

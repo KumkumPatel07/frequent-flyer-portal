@@ -1,4 +1,4 @@
-import { useState, type ReactElement } from 'react'
+import { useState, useEffect, useRef, type ReactElement } from 'react'
 import { MemberProfile, type MemberData } from './MemberProfile'
 import { FlightActivity, type FlightTransaction } from './FlightActivity'
 import { RewardSearch, type RewardFlight } from './RewardSearch'
@@ -14,6 +14,34 @@ export interface FrequentFlyerPortalProps {
 const STORAGE_KEYS = {
   MEMBER: 'ffp_member_data',
   TRANSACTIONS: 'ffp_transactions_data',
+  REDEEMED_FLIGHTS: 'ffp_redeemed_flights',
+}
+
+const TIER_BENEFITS: Record<string, string[]> = {
+  Silver: [
+    '25% Bonus Miles on eligible flights',
+    'Priority check-in and boarding',
+    'Complimentary seat selection 24 hours before flight',
+    'Dedicated customer service support',
+  ],
+  Gold: [
+    '50% Bonus Miles on eligible flights',
+    'Complimentary lounge access for member and guest',
+    'Priority baggage handling',
+    '1 additional complimentary checked bag',
+  ],
+  Platinum: [
+    '75% Bonus Miles on eligible flights',
+    'Global alliance lounge access',
+    'Guaranteed economy seat availability on sold-out flights',
+    '2 additional complimentary checked bags',
+  ],
+  Diamond: [
+    '100% Bonus Miles on eligible flights',
+    'First class lounge access & VIP concierge',
+    'Complimentary annual companion ticket',
+    'Unlimited fee waivers for changes and cancellations',
+  ],
 }
 
 // Initial fictional demo member data
@@ -73,6 +101,13 @@ const DEFAULT_REWARD_FLIGHTS: RewardFlight[] = [
     requiredMiles: 75000,
   },
 ]
+
+/**
+ * Validates array of strings defensively.
+ */
+function isValidStringArray(data: unknown): data is string[] {
+  return Array.isArray(data) && data.every((item) => typeof item === 'string')
+}
 
 /**
  * Validates member data record defensively.
@@ -168,8 +203,75 @@ export function FrequentFlyerPortal({
     return DEFAULT_TRANSACTIONS
   })
 
-  const [redeemedFlightIds, setRedeemedFlightIds] = useState<string[]>([])
+  const [redeemedFlightIds, setRedeemedFlightIds] = useState<string[]>(() => {
+    const loaded = loadPersistedData<unknown>(
+      STORAGE_KEYS.REDEEMED_FLIGHTS,
+      null
+    )
+    if (isValidStringArray(loaded)) {
+      return loaded
+    }
+    return []
+  })
   const [isRedeeming, setIsRedeeming] = useState(false)
+  const [isBenefitsDialogOpen, setIsBenefitsDialogOpen] = useState(false)
+
+  // Refs for accessible modal dialog behavior
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const lastFocusRef = useRef<HTMLElement | null>(null)
+
+  // Open the dialog as a true modal when isBenefitsDialogOpen becomes true.
+  // Register the native `close` event listener so both the close button and
+  // Escape-key dismissal both restore focus and sync React state.
+  useEffect(() => {
+    if (!isBenefitsDialogOpen) return
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    const handleClose = () => {
+      setIsBenefitsDialogOpen(false)
+      lastFocusRef.current?.focus()
+    }
+    dialog.addEventListener('close', handleClose)
+
+    // Open as modal (polyfilled in tests; native in browsers)
+    if (!dialog.hasAttribute('open')) {
+      try {
+        dialog.showModal()
+      } catch {
+        // Fallback for environments where showModal is unavailable
+        dialog.setAttribute('open', '')
+      }
+    }
+
+    // Move focus to the first focusable element inside the dialog
+    const firstFocusable = dialog.querySelector<HTMLElement>(
+      'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
+    )
+    firstFocusable?.focus()
+
+    return () => {
+      dialog.removeEventListener('close', handleClose)
+    }
+  }, [isBenefitsDialogOpen])
+
+  /** Close the dialog via the native API so the `close` event fires. */
+  const closeDialog = () => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (dialog.hasAttribute('open')) {
+      try {
+        dialog.close()
+      } catch {
+        // Manual fallback: remove attribute and dispatch event
+        dialog.removeAttribute('open')
+        dialog.dispatchEvent(new Event('close'))
+      }
+    } else {
+      setIsBenefitsDialogOpen(false)
+      lastFocusRef.current?.focus()
+    }
+  }
 
   // Handles reward flight redemption with cross-component consistency
   const handleRedeemFlight = (flight: RewardFlight) => {
@@ -207,15 +309,17 @@ export function FrequentFlyerPortal({
       }
 
       const updatedTransactions = [newTransaction, ...transactions]
+      const updatedRedeemed = [...redeemedFlightIds, flight.id]
 
       // Update state synchronously
       setMember(updatedMember)
       setTransactions(updatedTransactions)
-      setRedeemedFlightIds((prev) => [...prev, flight.id])
+      setRedeemedFlightIds(updatedRedeemed)
 
       // Persist updated state safely
       persistData(STORAGE_KEYS.MEMBER, updatedMember)
       persistData(STORAGE_KEYS.TRANSACTIONS, updatedTransactions)
+      persistData(STORAGE_KEYS.REDEEMED_FLIGHTS, updatedRedeemed)
 
       // Primary action telemetry logging
       console.log(
@@ -252,7 +356,13 @@ export function FrequentFlyerPortal({
       <div className="portal-grid">
         {/* Section 1: Member Profile */}
         <section className="portal-section" aria-label="Member Status Overview">
-          <MemberProfile member={member} />
+          <MemberProfile
+            member={member}
+            onViewBenefits={() => {
+              lastFocusRef.current = document.activeElement as HTMLElement
+              setIsBenefitsDialogOpen(true)
+            }}
+          />
         </section>
 
         {/* Section 2: Reward Flight Search & Redemption Calculator */}
@@ -276,6 +386,43 @@ export function FrequentFlyerPortal({
           <FlightActivity transactions={transactions} />
         </section>
       </div>
+
+      {/* Tier Benefits Dialog */}
+      {isBenefitsDialogOpen && member && (
+        <dialog
+          ref={dialogRef}
+          className="tier-benefits-dialog"
+          aria-label={`${member.tier} Tier Benefits`}
+        >
+          <div className="tier-benefits-content">
+            <header className="dialog-header">
+              <h3 className="dialog-title">Tier Benefits Overview</h3>
+              <button
+                type="button"
+                className="dialog-close-btn"
+                onClick={closeDialog}
+                aria-label="Close"
+              >
+                Close
+              </button>
+            </header>
+            <div className="dialog-body">
+              <p className="dialog-tier-intro">
+                Privileges for <strong>{member.tier}</strong> status members:
+              </p>
+              <ul className="tier-benefits-list">
+                {(TIER_BENEFITS[member.tier] ?? TIER_BENEFITS.Silver).map(
+                  (benefit, idx) => (
+                    <li key={idx} className="benefit-item">
+                      {benefit}
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          </div>
+        </dialog>
+      )}
     </main>
   )
 }

@@ -163,7 +163,7 @@ export function RewardSearch({
         noValidate
       >
         {errorMessage && (
-          <div className="form-error-banner" role="alert">
+          <div id="reward-form-error" className="form-error-banner" role="alert">
             {errorMessage}
           </div>
         )}
@@ -183,6 +183,7 @@ export function RewardSearch({
               aria-label="Origin"
               aria-required="true"
               aria-invalid={Boolean(errorMessage && !origin.trim())}
+              aria-describedby={errorMessage && !origin.trim() ? 'reward-form-error' : undefined}
             />
           </div>
 
@@ -200,6 +201,7 @@ export function RewardSearch({
               aria-label="Destination"
               aria-required="true"
               aria-invalid={Boolean(errorMessage && !destination.trim())}
+              aria-describedby={errorMessage && !destination.trim() ? 'reward-form-error' : undefined}
             />
           </div>
 
@@ -216,6 +218,7 @@ export function RewardSearch({
               aria-label="Travel date"
               aria-required="true"
               aria-invalid={Boolean(errorMessage && !date.trim())}
+              aria-describedby={errorMessage && !date.trim() ? 'reward-form-error' : undefined}
             />
           </div>
         </div>

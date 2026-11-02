@@ -1,6 +1,6 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, within, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import App from './App'
 import { FrequentFlyerPortal } from './components/FrequentFlyerPortal'
 import { RewardSearch, type RewardFlight } from './components/RewardSearch'
@@ -222,6 +222,40 @@ describe('Phase 6: Final Polish & Accessibility (TDD RED Phase)', () => {
 
       // Should have theme-color
       expect(html).toMatch(/<meta\s+name=["']theme-color["']\s+content=["'][^"']+["']/i)
+    })
+  })
+
+  // Tier Benefits Modal — showModal() Implementation
+  describe('Tier Benefits Modal – showModal() Implementation', () => {
+    it('calls showModal() when the dialog opens', async () => {
+      const user = userEvent.setup()
+      const showModalSpy = vi.spyOn(HTMLDialogElement.prototype, 'showModal')
+      render(<FrequentFlyerPortal initialMember={mockMember} />)
+      await user.click(screen.getByRole('button', { name: /view tier benefits/i }))
+      expect(showModalSpy).toHaveBeenCalledOnce()
+      showModalSpy.mockRestore()
+    })
+
+    it('restores focus to the trigger button when the dialog is closed via close button', async () => {
+      const user = userEvent.setup()
+      render(<FrequentFlyerPortal initialMember={mockMember} />)
+      const triggerBtn = screen.getByRole('button', { name: /view tier benefits/i })
+      await user.click(triggerBtn)
+      const dialog = screen.getByRole('dialog', { name: /tier benefits/i })
+      const closeBtn = within(dialog).getByRole('button', { name: /close/i })
+      await user.click(closeBtn)
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(document.activeElement).toBe(triggerBtn)
+    })
+
+    it('closes the dialog when the native close event fires (Escape / programmatic path)', async () => {
+      const user = userEvent.setup()
+      render(<FrequentFlyerPortal initialMember={mockMember} />)
+      await user.click(screen.getByRole('button', { name: /view tier benefits/i }))
+      const dialog = screen.getByRole('dialog', { name: /tier benefits/i })
+      // Simulate the native browser close event (fired by the browser on Escape after showModal)
+      fireEvent(dialog, new Event('close'))
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     })
   })
 })

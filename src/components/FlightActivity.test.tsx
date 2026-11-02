@@ -49,7 +49,7 @@ describe('FlightActivity & Miles Ledger Component (TDD RED Phase)', () => {
 
     expect(screen.getByText('AA-104')).toBeInTheDocument()
     expect(screen.getByText(/JFK/i)).toBeInTheDocument()
-    expect(screen.getByText(/LHR/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/LHR/i)[0]).toBeInTheDocument()
     expect(screen.getByText('2026-10-12')).toBeInTheDocument()
     expect(screen.getByText('Earned')).toBeInTheDocument()
   })

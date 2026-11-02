@@ -609,3 +609,120 @@ Report changed files, total test count, expected failures, and verification resu
 
 STOP after RED phase.
 ```
+
+
+## Phase 6: Final Polish & Accessibility (TDD GREEN Phase - Implementation)
+
+```text
+We have successfully completed and committed Phase 6 TDD RED.
+
+Implement Phase 6 GREEN for the Frequent Flyer Portal (ENG-163087).
+
+IMPORTANT RULES:
+
+1. Read the existing project structure, source files, tests, and PROMPTS.md before editing.
+2. Implement only the six requirements covered by src/FinalPolish.test.tsx.
+3. Do not delete, weaken, skip, or modify acceptance tests merely to make them pass.
+4. Preserve all existing functionality and visual design.
+5. Use accessible, maintainable React and TypeScript.
+6. Append this exact implementation prompt to PROMPTS.md.
+
+REQUIREMENTS:
+
+1. REDEMPTION PERSISTENCE
+
+* Persist redeemed flight IDs using localStorage key `ffp_redeemed_flights`.
+* Restore redeemed IDs safely on application load.
+* Previously redeemed flights must remain disabled after page refresh.
+* Handle missing, malformed, or corrupt stored data without crashing.
+* Keep redemption state synchronized with the existing member balance and transaction ledger.
+* Prevent duplicate redemption, including after refresh.
+
+2. HEADING ACCESSIBILITY
+
+* Ensure the application has exactly one primary h1: "Frequent Flyer Portal".
+* Change the developer starter heading to an appropriate secondary heading.
+* Preserve its existing content and update no tests beyond the already committed equivalent heading assertion.
+* Maintain logical heading hierarchy.
+
+3. TIER BENEFITS DIALOG
+
+* Make "View Tier Benefits" functional.
+* Open an accessible dialog using native `<dialog>` or an equally accessible implementation.
+* Display benefits relevant to the member's current tier.
+* Include an accessible close button.
+* Support Escape-key dismissal and sensible keyboard focus behavior.
+* Do not break existing MemberProfile tests.
+
+4. FORM ERROR ASSOCIATION
+
+* Give the RewardSearch validation error element a stable ID: `reward-form-error`.
+* Connect invalid form inputs to the error message using `aria-describedby`.
+* Preserve `aria-invalid="true"` and `role="alert"`.
+* Remove aria-describedby when the associated error is no longer active, where appropriate.
+
+5. AIRPORT FORMATTING
+
+* Remove the duplicate-airport `seenAirports` special-case behavior.
+* Render airport codes consistently, including repeated LHR values.
+* Do not convert airport codes into city names.
+* Preserve search and table functionality.
+
+6. DOCUMENT METADATA
+
+* Update index.html with a professional, human-friendly page title.
+* Add a meaningful meta description.
+* Add a suitable theme-color meta tag.
+* Do not add secrets or personal information.
+
+VERIFICATION:
+
+* Run `npm run test:run`.
+* All 48 tests must pass.
+* Run `npm run build`.
+* Run `npm run lint`.
+* Report exact test counts and command results.
+* Inspect the final diff and confirm no acceptance tests were weakened.
+* Do not claim a Lighthouse score; Lighthouse will be checked separately.
+
+After implementation, STOP and provide:
+
+1. Changed files.
+2. Summary of each requirement implemented.
+3. Exact test/build/lint results.
+4. Any remaining limitations.
+5. Confirmation that PROMPTS.md was updated.
+
+Do not commit or push. I will review and commit the changes manually.
+```
+
+---
+
+## Phase 6 Correction — Modal Dialog (showModal) Implementation
+
+Review and improve the Tier Benefits dialog implementation in FrequentFlyerPortal.tsx.
+
+IMPORTANT: Do not modify or weaken existing tests or unrelated features.
+
+The current implementation uses `<dialog open>`, which creates a non-modal dialog. Replace this with proper native modal dialog behavior using `HTMLDialogElement.showModal()`.
+
+Requirements:
+
+1. Use a React ref for the dialog element.
+2. Open it with `showModal()` when isBenefitsDialogOpen becomes true.
+3. Close it using the native close() method and synchronize React state through the onClose event.
+4. Support Escape-key dismissal.
+5. Ensure keyboard focus moves into the dialog when opened.
+6. Return focus to the original "View Tier Benefits" button when closed.
+7. Preserve tier-specific benefits, accessible labeling, close button and existing styling.
+8. Avoid errors if the dialog is already open or closed.
+9. Add or update focused tests for modal behavior, keyboard dismissal and focus restoration without weakening existing acceptance tests.
+10. Update PROMPTS.md with this exact correction prompt.
+
+Run:
+
+* npm run test:run
+* npm run build
+* npm run lint
+
+Report exact results. Do not commit or push.

@@ -97,3 +97,111 @@
     gap: 16px;
   }
 }
+
+/* Tier Benefits Dialog */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.tier-benefits-dialog {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.tier-benefits-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+
+.dialog-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.dialog-close-btn {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  color: var(--text-h);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.dialog-close-btn:hover {
+  background: var(--border);
+}
+
+.dialog-close-btn:focus-visible {
+  outline: 2px solid var(--text-h);
+  outline-offset: 2px;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dialog-tier-intro {
+  font-size: 15px;
+  color: var(--text);
+  margin: 0;
+}
+
+.dialog-tier-intro strong {
+  color: var(--text-h);
+}
+
+.tier-benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 140%;
+  color: var(--text);
+}
+
+.benefit-item::before {
+  content: '✓';
+  color: var(--text-h);
+  font-weight: 700;
+}

@@ -12,9 +12,9 @@ function App() {
 
       {/* Baseline developer verification bar */}
       <footer className="starter-baseline-container">
-        <h1 className="starter-title">
+        <h2 className="starter-title">
           Get started with Frequent Flyer Portal
-        </h1>
+        </h2>
         <button
           type="button"
           className="counter"
