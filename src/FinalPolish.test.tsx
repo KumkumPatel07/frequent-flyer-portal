@@ -105,12 +105,20 @@ describe('Phase 6: Final Polish & Accessibility (TDD RED Phase)', () => {
       expect(h1Headings).toHaveLength(1)
       expect(h1Headings[0]).toHaveTextContent(/Frequent Flyer Portal/i)
 
-      // Starter verification heading in footer is an h2
-      const starterHeading = screen.getByRole('heading', {
-        level: 2,
-        name: /get started/i,
-      })
-      expect(starterHeading).toBeInTheDocument()
+      // Portal sections use semantic h2 headings
+expect(
+  screen.getByRole('heading', {
+    level: 2,
+    name: /reward flight search/i,
+  }),
+).toBeInTheDocument()
+
+expect(
+  screen.getByRole('heading', {
+    level: 2,
+    name: /flight activity & miles ledger/i,
+  }),
+).toBeInTheDocument()
     })
   })
 
