@@ -535,3 +535,77 @@ STOP after implementation and verification.
 Report changed files, test results, build results, lint results, persistence behavior, and any remaining limitations.
 ```
 
+
+
+## Phase 6: Final Polish & Accessibility (TDD RED Phase)
+
+```text
+Continue ticket ENG-163087 — End-to-End Frequent Flyer Portal.
+
+Start Phase 6: Final Polish & Accessibility — TDD RED phase.
+
+An audit has identified high- and medium-priority issues. Create acceptance tests for these improvements before implementing any fixes.
+
+FIRST inspect the existing source code and all test files.
+
+NEW TEST REQUIREMENTS:
+
+1. REDEMPTION PERSISTENCE
+
+* Redeemed flight IDs must survive browser refresh.
+* Previously redeemed flights must remain disabled after reloading.
+* Malformed redeemed-flight storage must fall back safely.
+* Prevent duplicate redemption after refresh.
+
+2. HEADING ACCESSIBILITY
+
+* The application should have a clear heading hierarchy.
+* Keep one primary page heading.
+* Update the existing App smoke test appropriately if necessary.
+* Do not weaken existing assertions.
+
+3. TIER BENEFITS INTERACTION
+
+* Clicking "View Tier Benefits" must open an accessible dialog or equivalent interface.
+* Benefits content must be appropriate for the member's current tier.
+* Dialog must support keyboard interaction and accessible dismissal.
+
+4. FORM ERROR ASSOCIATION
+
+* Invalid RewardSearch inputs must reference the relevant error message through aria-describedby.
+* Preserve aria-invalid and role="alert".
+
+5. AIRPORT FORMATTING
+
+* Remove special-case rendering that converts duplicate LHR values differently.
+* Ensure all airport codes are rendered consistently.
+
+6. DOCUMENT METADATA
+
+* Add testable expectations for the page title and meta description.
+* Verify theme-color metadata exists.
+
+TDD RULES:
+
+* Create or update tests only.
+* Do not implement source-code fixes yet.
+* Do not weaken or skip existing tests.
+* Do not modify unrelated features.
+* Append the exact prompt to PROMPTS.md.
+
+Run:
+
+* npm run test:run
+* npm run build
+* npm run lint
+
+Expected:
+
+* New tests should fail for the identified missing functionality.
+* Existing 41 tests should continue passing, except an explicitly updated heading assertion that preserves equivalent coverage.
+* Build and lint should remain clean.
+
+Report changed files, total test count, expected failures, and verification results.
+
+STOP after RED phase.
+```

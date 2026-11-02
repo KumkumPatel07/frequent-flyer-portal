@@ -6,7 +6,7 @@ describe('Application Baseline Smoke Test', () => {
   it('renders the initial heading and starter elements without crashing', () => {
     render(<App />)
 
-    const heading = screen.getByRole('heading', { level: 1, name: /get started/i })
+    const heading = screen.getByRole('heading', { level: 2, name: /get started/i })
     expect(heading).toBeInTheDocument()
 
     const counterButton = screen.getByRole('button', { name: /count is 0/i })
