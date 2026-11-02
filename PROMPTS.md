@@ -424,8 +424,114 @@ Expected:
 * All existing 33 tests must continue passing!
 ```
 
+## Phase 5: Portal Composition & End-to-End Integration (TDD GREEN Phase - Implementation)
 
+```text
+Continue ticket ENG-163087, Phase 5: Portal Composition & End-to-End Integration — TDD GREEN phase.
 
+The RED phase is complete and committed.
 
+Now implement the integrated Frequent Flyer Portal so all 41 existing tests pass.
 
+FIRST inspect:
+
+* src/PortalIntegration.test.tsx
+* src/components/FrequentFlyerPortal.tsx
+* src/App.tsx and src/App.test.tsx
+* src/components/MemberProfile.tsx and its tests
+* src/components/FlightActivity.tsx and its tests
+* src/components/RewardSearch.tsx and its tests
+* All related CSS files
+* PROMPTS.md
+
+Understand all existing component props, data contracts, and test expectations before implementation.
+
+IMPLEMENTATION REQUIREMENTS:
+
+1. PORTAL COMPOSITION
+
+* Render MemberProfile, FlightActivity, and RewardSearch together in the main portal.
+* Create a clean, responsive dashboard layout.
+* Integrate the portal into App.tsx.
+
+2. SHARED STATE
+
+* Maintain one consistent member record and available miles balance.
+* Pass the correct data to all child components.
+* Initialize safely if persisted data is missing or malformed.
+
+3. REDEMPTION FLOW
+   When a member successfully redeems a reward flight:
+
+* Deduct the required miles from available balance.
+* Update MemberProfile immediately.
+* Add the corresponding redemption transaction to FlightActivity.
+* Prevent redemption if the balance is insufficient.
+* Prevent duplicate or invalid redemption.
+* Keep all displayed data consistent.
+
+4. PERSISTENCE
+
+* Persist relevant portal state using localStorage.
+* Handle missing, malformed, or inaccessible stored data safely.
+* Do not store secrets or real personal information.
+* Keep initial demo data clearly fictional.
+
+5. ANALYTICS
+   When the primary portal action successfully completes, log exactly:
+
+[Analytics] User interacted with End-to-End Frequent Flyer Portal
+
+Do not log this message for failed or cancelled actions.
+
+6. EMPTY AND LOADING STATES
+
+* Display "No data found" where appropriate.
+* Show accessible loading indicators during asynchronous operations.
+* Prevent duplicate actions while an operation is in progress.
+
+7. ACCESSIBILITY AND SECURITY
+
+* Preserve keyboard navigation and accessible labels.
+* Use semantic HTML.
+* Sanitize user text before storing it in state.
+* Never use dangerouslySetInnerHTML.
+* Handle malformed records safely.
+
+8. DESIGN
+
+* Maintain the existing monochromatic corporate design system.
+* Reuse existing CSS variables.
+* Use consistent 16px/32px spacing.
+* Responsive desktop and mobile layouts.
+* No rogue hardcoded hex colors.
+
+TDD RULES:
+
+* Do not modify, weaken, skip, or delete any existing tests.
+* Do not change the expected analytics message.
+* Do not introduce unnecessary dependencies.
+* Keep implementation maintainable and typed.
+* Append the exact implementation prompt to PROMPTS.md.
+
+VERIFICATION:
+
+Run:
+
+1. npm run test:run
+2. npm run build
+3. npm run lint
+
+Expected:
+
+* All 41 tests pass.
+* Production build succeeds.
+* ESLint has zero warnings and errors.
+
+If any test fails, investigate and fix the implementation without weakening tests.
+
+STOP after implementation and verification.
+
+Report changed files, test results, build results, lint results, persistence behavior, and any remaining limitations.
+```
 

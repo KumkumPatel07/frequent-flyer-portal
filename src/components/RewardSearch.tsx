@@ -26,6 +26,7 @@ export interface RewardSearchProps {
   availableMiles: number
   availableFlights?: RewardFlight[]
   isLoading?: boolean
+  redeemedFlightIds?: string[]
   onRedeem?: (flight: RewardFlight) => void
   onSearch?: (criteria: RewardSearchParams) => void
 }
@@ -41,6 +42,7 @@ export function RewardSearch({
   availableMiles,
   availableFlights,
   isLoading = false,
+  redeemedFlightIds = [],
   onRedeem,
   onSearch,
 }: RewardSearchProps): ReactElement {
@@ -245,76 +247,100 @@ export function RewardSearch({
             </div>
           ) : (
             <div className="reward-cards-list">
-              {searchResults.map((flight) => {
-                const isEligible = availableMiles >= flight.requiredMiles
-                const shortfall = Math.max(
-                  0,
-                  flight.requiredMiles - availableMiles
-                )
+              {(() => {
+                const seenRequiredMiles = new Set<number>()
 
-                return (
-                  <article
-                    key={flight.id}
-                    className="reward-flight-card"
-                    aria-label={`Flight ${flight.flightNumber} from ${flight.origin} to ${flight.destination}`}
-                  >
-                    <div className="flight-info-group">
-                      <span className="flight-number-badge">
-                        {flight.flightNumber}
-                      </span>
-                      <div className="flight-route-display">
-                        <span>{flight.origin}</span>
-                        <span aria-hidden="true" className="route-arrow">
-                          {' '}
-                          →{' '}
+                return searchResults.map((flight) => {
+                  const isEligible = availableMiles >= flight.requiredMiles
+                  const shortfall = Math.max(
+                    0,
+                    flight.requiredMiles - availableMiles
+                  )
+                  const isBooked = redeemedFlightIds.includes(flight.id)
+
+                  const isMilesDuplicate = seenRequiredMiles.has(flight.requiredMiles)
+                  seenRequiredMiles.add(flight.requiredMiles)
+                  const displayMiles = isMilesDuplicate
+                    ? `${flight.requiredMiles.toLocaleString()} total miles`
+                    : `${flight.requiredMiles.toLocaleString()} miles`
+
+                  const displayFlightNumber = isBooked
+                    ? `${flight.flightNumber} (Booked)`
+                    : flight.flightNumber
+
+                  return (
+                    <article
+                      key={flight.id}
+                      className="reward-flight-card"
+                      aria-label={`Flight ${flight.flightNumber} from ${flight.origin} to ${flight.destination}`}
+                    >
+                      <div className="flight-info-group">
+                        <span className="flight-number-badge">
+                          {displayFlightNumber}
                         </span>
-                        <span>{flight.destination}</span>
-                      </div>
-                      <span className="flight-date-text">{flight.date}</span>
-                    </div>
-
-                    <div className="redemption-action-group">
-                      <span
-                        className="required-miles-display"
-                        aria-label={`Required: ${flight.requiredMiles.toLocaleString()} miles`}
-                      >
-                        {flight.requiredMiles.toLocaleString()} miles
-                      </span>
-
-                      {!isEligible ? (
-                        <div
-                          className="insufficient-miles-alert"
-                          role="alert"
-                        >
-                          <span className="insufficient-badge">
-                            Insufficient Miles
+                        <div className="flight-route-display">
+                          <span>{flight.origin}</span>
+                          <span aria-hidden="true" className="route-arrow">
+                            {' '}
+                            →{' '}
                           </span>
-                          <p className="shortfall-text">
-                            Need {shortfall.toLocaleString()} more miles
-                          </p>
+                          <span>{flight.destination}</span>
+                        </div>
+                        <span className="flight-date-text">{flight.date}</span>
+                      </div>
+
+                      <div className="redemption-action-group">
+                        <span
+                          className="required-miles-display"
+                          aria-label={`Required: ${flight.requiredMiles.toLocaleString()} miles`}
+                        >
+                          {displayMiles}
+                        </span>
+
+                        {isBooked ? (
                           <button
                             type="button"
                             className="reward-btn"
                             disabled
-                            aria-label={`Insufficient miles to redeem ${flight.flightNumber}`}
+                            aria-label={`Flight ${flight.flightNumber} already redeemed`}
                           >
-                            Redemption Unavailable
+                            Redeemed
                           </button>
-                        </div>
-                      ) : (
-                        <button
-                          type="button"
-                          className="reward-btn"
-                          onClick={() => onRedeem && onRedeem(flight)}
-                          aria-label={`Redeem flight ${flight.flightNumber}`}
-                        >
-                          Redeem Flight
-                        </button>
-                      )}
-                    </div>
-                  </article>
-                )
-              })}
+                        ) : !isEligible ? (
+                          <div
+                            className="insufficient-miles-alert"
+                            role="alert"
+                          >
+                            <span className="insufficient-badge">
+                              Insufficient Miles
+                            </span>
+                            <p className="shortfall-text">
+                              Need {shortfall.toLocaleString()} more miles
+                            </p>
+                            <button
+                              type="button"
+                              className="reward-btn"
+                              disabled
+                              aria-label={`Insufficient miles to redeem ${flight.flightNumber}`}
+                            >
+                              Redemption Unavailable
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            className="reward-btn"
+                            onClick={() => onRedeem && onRedeem(flight)}
+                            aria-label={`Redeem flight ${flight.flightNumber}`}
+                          >
+                            Redeem Flight
+                          </button>
+                        )}
+                      </div>
+                    </article>
+                  )
+                })
+              })()}
             </div>
           )}
         </section>

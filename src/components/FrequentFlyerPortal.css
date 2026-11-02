@@ -1,0 +1,99 @@
+/* Monochromatic Corporate Styling for Frequent Flyer Portal Dashboard */
+.portal-container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px 16px;
+  text-align: left;
+}
+
+.portal-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+}
+
+.portal-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+  line-height: 120%;
+  letter-spacing: -0.5px;
+}
+
+.portal-subtitle {
+  font-size: 16px;
+  color: var(--text);
+  margin: 0;
+}
+
+.portal-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.portal-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Loading state */
+.portal-loading {
+  padding: 64px 32px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: var(--code-bg);
+  text-align: center;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.portal-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--text-h);
+  border-radius: 50%;
+  animation: portal-spin 0.8s linear infinite;
+}
+
+.portal-loading-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+@keyframes portal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .portal-container {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  .portal-title {
+    font-size: 24px;
+  }
+
+  .portal-grid {
+    gap: 16px;
+  }
+}

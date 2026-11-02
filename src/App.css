@@ -1,3 +1,24 @@
+.app-main-layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.starter-baseline-container {
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.starter-title {
+  font-size: 14px;
+  margin: 4px 0;
+  color: var(--text);
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
